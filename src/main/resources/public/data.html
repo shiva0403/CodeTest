@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+            
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+	<script type="text/javascript" 
+            src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
+	<script type="text/javascript">
+        $(document).ready(function () { 
+			
+		 $('#ajaxBtn').click(function(){
+			 mytable = $('<table></table>');
+			 var tr = [];
+			 var total = 0;
+			$.ajax('/phone/numbers1?phone='+$('#phone').val(),   // request url
+			{            
+				success: function (data, status, xhr) {    // success callback function
+						console.log(data.length);
+						$('#total').html(data.length);
+						$.each(data, function( index, value ) {
+							  //alert( index + ": " + value );
+							var row = $('<tr></tr>').text(value).appendTo(mytable);
+							});
+						mytable.appendTo("#box");
+				}
+			});
+		 });
+
+        });
+    </script>
+</head>
+<body>
+	<h1> Phone Validation</h1>
+	<input type="text" id="phone"/>
+	<input type="button" id="ajaxBtn" value="Generator Numbers" />
+	<div>
+	Total number of combinations:  <span id="total"></span> 
+	</div>
+	<div id="box">
+</div>
+</body>
+</html>
